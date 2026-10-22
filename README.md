@@ -3,6 +3,8 @@
 Streamlit aplikace, která z exportu modelu systémové dynamiky (Vensim) vytvoří
 **animovaný graf (GIF)** pro vložení do prezentace v PowerPointu.
 
+**▶️ Aplikace běží na <https://system-dynamics-charts.streamlit.app/>**
+
 PowerPoint neumí vložit živý interaktivní graf. Animovaný GIF je spolehlivá cesta, jak na
 slidu ukázat vývoj veličin v čase. GIF se ve výchozím nastavení přehraje jednou a zůstane
 stát na hotovém grafu.
@@ -62,6 +64,44 @@ ruff check .        # kontrola stylu a chyb
 ruff format .       # formátování (délka řádku 100)
 ```
 
+> **Testovací data zatím chybí.** Testy v `tests/test_loaders.py` čtou exporty ze složky
+> `data/`, která není součástí repozitáře, takže po naklonování selžou. Doplníme vymyšlená
+> testovací data přímo do `tests/`, aby testy fungovaly bez skutečných dat.
+
+## Postup práce s větvemi
+
+| Větev | Účel |
+|---|---|
+| `main` | Funkční, otestovaná verze. Z ní se nasazuje aplikace na Streamlit Cloud. |
+| `dev` | Vývoj – nové funkce, opravy, testování. |
+
+Do `main` se přímo necommituje. Každý `push` do `main` se hned projeví v běžící aplikaci.
+
+**Běžná práce** (ve větvi `dev`):
+
+```bash
+git switch dev          # přepnutí do vývojové větve
+git pull                # stažení případných změn z GitHubu
+# ... úpravy kódu ...
+pytest                  # před commitem musí testy projít
+git add .
+git commit -m "Krátký popis změny česky"
+git push
+```
+
+**Vydání nové verze** (až je změna v `dev` hotová a otestovaná):
+
+```bash
+pytest                  # poslední kontrola v dev
+git switch main
+git pull
+git merge dev           # přenese změny z dev do main
+git push                # Streamlit Cloud aplikaci sám aktualizuje
+git switch dev          # zpět k vývoji
+```
+
+Po vydání ověř, že aplikace na <https://system-dynamics-charts.streamlit.app/> běží.
+
 ## Struktura projektu
 
 ```
@@ -90,6 +130,7 @@ requirements.txt    # závislosti
 5. **Deploy.** Závislosti se nainstalují z `requirements.txt` automaticky.
 
 Po každém `git push` do `main` se aplikace na Cloudu sama aktualizuje.
+Nasazená aplikace: <https://system-dynamics-charts.streamlit.app/>.
 
 **Dobré vědět:**
 
