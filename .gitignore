@@ -1,0 +1,39 @@
+# Virtuální prostředí
+venv/
+.venv/
+
+# Tajné údaje
+.env
+.streamlit/secrets.toml
+
+# Python – automaticky generované soubory
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Logy a systémové soubory
+*.log
+.DS_Store
+*:Zone.Identifier
+
+# Osobní instrukce pro Claude (neverzovat)
+CLAUDE.md
+CLAUDE.MD
+CLAUDE_global.md
+
+# Vstupní data z modelů (nejsou součástí repa)
+data/
+
+# Inspirace a pracovní materiály (zůstávají jen lokálně)
+insp/
+notebooks/
+src/
+tests/chart_test.py
+
+# Testy: kód verzujeme, vygenerované výstupy ne
+tests/*.gif
+tests/*.png
+tests/*.mp4

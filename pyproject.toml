@@ -1,0 +1,11 @@
+# Nastavení nástrojů (pytest, ruff). Závislosti zůstávají v requirements.txt.
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]  # aby testy našly balíčky model/ a viz/ z kořene projektu
+python_files = ["test_*.py"]  # jen test_*.py - starý skript chart_test.py se nespouští
+# některé testy animaci jen sestaví a neuloží; matplotlib pak při úklidu paměti varuje
+filterwarnings = ["ignore:Animation was deleted without rendering:UserWarning"]
+
+[tool.ruff]
+line-length = 100
